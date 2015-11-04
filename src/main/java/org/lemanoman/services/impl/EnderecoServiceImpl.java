@@ -110,19 +110,20 @@ public class EnderecoServiceImpl implements EnderecoService{
 		    uf = estadoUF.split("/")[1];
 
 		    cep = td.get(3).text();
+		    
+		    
+		    EnderecoModel enderecoModel = new EnderecoModel();
+		    enderecoModel.setRua(rua);
+		    enderecoModel.setCep(cep);
+		    enderecoModel.setBairro(bairro);
+		    enderecoModel.setEstado(estado);
+		    enderecoModel.setUf(uf);
+		    return enderecoModel;
 		}	
 	    }
 	    
-	    EnderecoModel enderecoModel = new EnderecoModel();
-	    enderecoModel.setRua(rua);
-	    enderecoModel.setCep(cep);
-	    enderecoModel.setEstado(estado);
-	    enderecoModel.setUf(uf);
-	    return enderecoModel;
-	}else{
-	    return null;
 	}
-
+	return null;
     }
 
     private boolean isCepValid(String cep){
