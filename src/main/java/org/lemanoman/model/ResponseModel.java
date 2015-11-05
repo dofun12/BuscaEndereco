@@ -1,11 +1,12 @@
 package org.lemanoman.model;
 
-public class EnderecoModel {
+public class ResponseModel {
     private String rua;
     private String bairro;
     private String estado;
     private String uf;
     private String cep;
+    private StatusResponse response;
     
     public String getRua() {
         return rua;
@@ -37,6 +38,20 @@ public class EnderecoModel {
     public void setCep(String cep) {
         this.cep = cep;
     }
+	public String getResponse() {
+		switch (this.response) {
+			case CEP_DESCONHECIDO:return "CEP desconhecido";
+			case CEP_ENCONTRADO:return "CEP encontrado";
+			case CEP_INVALIDO:return "CEP inválido";
+		default:
+			break;
+		}
+		return "";
+	}
+	public void setResponse(StatusResponse response) {
+		this.response = response;
+	}
+	
     
     
 }
