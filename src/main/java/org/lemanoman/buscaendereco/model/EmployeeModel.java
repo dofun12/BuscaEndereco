@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import com.google.common.base.Objects;
 
 @Entity
-public class Employee {
+public class EmployeeModel {
 
     @Id
     @NotNull
@@ -27,10 +27,10 @@ public class Employee {
     @Column(name = "city", nullable = false)
     private String city;
 
-    Employee() {
+    EmployeeModel() {
     }
 
-    public Employee(final String id, final String name,final String city) {
+    public EmployeeModel(final String id, final String name,final String city) {
         this.id = id;
         this.name = name;
         this.city = city;

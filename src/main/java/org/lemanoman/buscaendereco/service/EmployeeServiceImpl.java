@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.lemanoman.buscaendereco.model.Employee;
+import org.lemanoman.buscaendereco.model.EmployeeModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,13 +26,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Transactional
-    public Employee save(@NotNull @Valid final Employee employee) {
+    public EmployeeModel save(@NotNull @Valid final EmployeeModel employee) {
         LOGGER.debug("Creating {}", employee);
         return repository.save(employee);
     }
 
     @Transactional(readOnly = true)
-    public List<Employee> getList() {
+    public List<EmployeeModel> getList() {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }
