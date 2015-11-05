@@ -90,7 +90,6 @@ public class DefaultController {
 	    try {
 		HttpResponse firstPage = client.execute(get);
 		int responseCode = firstPage.getStatusLine().getStatusCode();
-		System.out.println(responseCode);
 		if (responseCode == 200) {
 		    post.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
 
