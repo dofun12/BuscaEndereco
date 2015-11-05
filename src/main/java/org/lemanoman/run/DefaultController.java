@@ -62,6 +62,11 @@ public class DefaultController {
 	}
     }
 
+    /**
+     * Nesse metodo, é iniciado um loop onde ele tenta substituir os digitos do cep não encontrado por zero, até que encontre algum endereço válido.
+     * @param cepSearch
+     * @return
+     */
     public ResponseModel searchByCEP(String cepSearch) {
 	int lastIndex = cepSearch.length() - 1;
 	int zeros = 1;
@@ -81,6 +86,13 @@ public class DefaultController {
 
     }
 
+    /**
+     * Aqui ele entra no site dos correios.
+     *  Salva os cookies no HttpClient, para só então ele enviar o campo CEP via post.
+     *  para a próxima página( ainda bem que não tem captcha :D ).
+     * @param cepSearch
+     * @return
+     */
     private ResponseModel find(String cepSearch) {
 	if (isCepValid(cepSearch)) {
 	    HttpClient client = HttpClientBuilder.create().build();
@@ -114,18 +126,18 @@ public class DefaultController {
 	}
 	return null;
     }
+    
+    
 
-    private String extractHTML(HttpResponse response) throws IllegalStateException, IOException {
-	BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-	StringBuffer result = new StringBuffer();
-	String line = "";
-	while ((line = rd.readLine()) != null) {
-	    result.append(line + "\n");
-	}
-	return result.toString();
-    }
-
+    /**
+     * Caso o processo acima, funcione normalmente. 
+     * Aqui é parseado o HTML dos correios gerando uma classe ResponseModel, 
+     * que é onde fica armazenado o endereço(rua,bairro,estado,uf,cep).
+     * @param response
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
     private ResponseModel parseHTML(String html, String cepSearch) {
 	String rua = "";
 	String bairro = "";
@@ -163,7 +175,33 @@ public class DefaultController {
 	}
 	return null;
     }
+    
+    /**
+     * Trecho utilizado para ler o HTTPResponse e transformar em texto. HTML no caso.
+     * @param response
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+    
+    private String extractHTML(HttpResponse response) throws IllegalStateException, IOException {
+	BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
+	StringBuffer result = new StringBuffer();
+	String line = "";
+	while ((line = rd.readLine()) != null) {
+	    result.append(line + "\n");
+	}
+	return result.toString();
+    }
+
+    /**
+     * Metodo onde se verifica se um cep é válido.
+     * 	 Para um CEP ser válido ele precisa ter apenas numeros,
+     * 	e não mais nem menos de 8 digitos.
+     * @param cep
+     * @return
+     */
     private boolean isCepValid(String cep) {
 	return cep.matches("^[0-9]{8}$");
     }
