@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 
 @RestController
-public class DefaultController {
+public class CEPController {
 
     @RequestMapping(value = "/buscaCEP/{cep}", method = RequestMethod.GET, produces = "application/json")
     public ResponseModel buscaCEPGet(@PathVariable String cep) {
