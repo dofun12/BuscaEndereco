@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: BuscaEndereco
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: BuscaEndereco
+Build-Jdk: 1.7.0_80
+Built-By: kevim
+Created-By: Maven Integration for Eclipse
+
