@@ -1,4 +1,4 @@
-package org.lemanoman.model;
+package org.lemanoman.buscaendereco.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

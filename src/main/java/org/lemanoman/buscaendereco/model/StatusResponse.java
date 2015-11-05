@@ -1,4 +1,4 @@
-package org.lemanoman.model;
+package org.lemanoman.buscaendereco.model;
 
 public enum StatusResponse {
 	CEP_ENCONTRADO,

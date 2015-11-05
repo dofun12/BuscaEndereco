@@ -1,4 +1,4 @@
-package org.lemanoman.run;
+package org.lemanoman.buscaendereco.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.lemanoman.model.BuscaModel;
-import org.lemanoman.model.ResponseModel;
-import org.lemanoman.model.StatusResponse;
+import org.lemanoman.buscaendereco.model.BuscaModel;
+import org.lemanoman.buscaendereco.model.ResponseModel;
+import org.lemanoman.buscaendereco.model.StatusResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

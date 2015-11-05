@@ -1,4 +1,4 @@
-package org.lemanoman.tests;
+package org.lemanoman.buscaendereco.tests;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.lemanoman.model.BuscaModel;
-import org.lemanoman.model.ResponseModel;
-import org.lemanoman.model.StatusResponse;
+import org.lemanoman.buscaendereco.model.BuscaModel;
+import org.lemanoman.buscaendereco.model.ResponseModel;
+import org.lemanoman.buscaendereco.model.StatusResponse;
 import org.springframework.web.client.RestTemplate;
 
 import ch.qos.logback.core.status.Status;
