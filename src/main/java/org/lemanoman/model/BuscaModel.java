@@ -1,5 +1,8 @@
 package org.lemanoman.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BuscaModel {
 	private String cep;
 

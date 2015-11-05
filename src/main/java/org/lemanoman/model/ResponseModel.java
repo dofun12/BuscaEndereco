@@ -7,51 +7,67 @@ public class ResponseModel {
     private String uf;
     private String cep;
     private StatusResponse response;
-    
+
     public String getRua() {
-        return rua;
+	return rua;
     }
+
     public void setRua(String rua) {
-        this.rua = rua;
+	this.rua = rua;
     }
+
     public String getBairro() {
-        return bairro;
+	return bairro;
     }
+
     public void setBairro(String bairro) {
-        this.bairro = bairro;
+	this.bairro = bairro;
     }
+
     public String getEstado() {
-        return estado;
+	return estado;
     }
+
     public void setEstado(String estado) {
-        this.estado = estado;
+	this.estado = estado;
     }
+
     public String getUf() {
-        return uf;
+	return uf;
     }
+
     public void setUf(String uf) {
-        this.uf = uf;
+	this.uf = uf;
     }
+
     public String getCep() {
-        return cep;
+	return cep;
     }
+
     public void setCep(String cep) {
-        this.cep = cep;
+	this.cep = cep;
     }
-	public String getResponse() {
-		switch (this.response) {
-			case CEP_DESCONHECIDO:return "CEP desconhecido";
-			case CEP_ENCONTRADO:return "CEP encontrado";
-			case CEP_INVALIDO:return "CEP inválido";
-		default:
-			break;
-		}
-		return "";
+
+    public String getResponseMessage() {
+	switch (this.response) {
+	case CEP_DESCONHECIDO:
+	    return "CEP desconhecido";
+	case CEP_ENCONTRADO:
+	    return "CEP encontrado";
+	case CEP_INVALIDO:
+	    return "CEP inválido";
+	default:
+	    break;
 	}
-	public void setResponse(StatusResponse response) {
-		this.response = response;
-	}
-	
+	return "";
+    }
     
-    
+    public StatusResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(StatusResponse response) {
+	this.response = response;
+    }
+
 }
