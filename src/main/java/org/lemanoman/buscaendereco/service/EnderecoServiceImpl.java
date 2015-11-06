@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.lemanoman.buscaendereco.model.EmployeeModel;
+import org.lemanoman.buscaendereco.model.EnderecoModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,24 +15,24 @@ import org.springframework.validation.annotation.Validated;
 
 @Service
 @Validated
-public class EmployeeServiceImpl implements EmployeeService {
+public class EnderecoServiceImpl implements EnderecoService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
-    private final EmployeeRepository repository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnderecoServiceImpl.class);
+    private final EnderecoRepository repository;
 
     @Inject
-    public EmployeeServiceImpl(final EmployeeRepository repository) {
+    public EnderecoServiceImpl(final EnderecoRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public EmployeeModel save(@NotNull @Valid final EmployeeModel employee) {
-        LOGGER.debug("Creating {}", employee);
-        return repository.save(employee);
+    public EnderecoModel save(@NotNull @Valid final EnderecoModel endereco) {
+        LOGGER.debug("Creating {}", endereco);
+        return repository.save(endereco);
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeModel> getList() {
+    public List<EnderecoModel> getList() {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }

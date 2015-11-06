@@ -1,47 +1,161 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	    
-		<script 
-			src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
-		</script>
-		
-		<script 
-			src="//code.jquery.com/jquery-1.11.3.min.js">
-		</script>
-		
-		<script src="lib/bootsrap/js/bootstrap.min.js"></script>
-		
-		<script>
-			var app = angular.module('myApp', []);
-			app.controller('EnderecoController', function($scope, $http) {
-				$scope.procurarCEP = function(){
-					var busca = {"cep" : $scope.inputcep};
-					$http.post('/buscaRapidaCEP/', busca , {} ).success(function(data) {
-						$scope.teste = data;
-						if(data.response == "CEP_DESCONHECIDO"){
-							$http.post('/buscaCEP/', busca , {} ).success(function(subData) {
-								$scope.teste2 = subData;
-							});
-						}
-						console.log(data);
-					});	
-				}
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="lib/angularjs/angular.min.js"></script>
+
+<script src="lib/jquery/jquery-1.11.3.min.js"></script>
+
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+	var app = angular.module('myApp', []);
+	app.controller('EnderecoController', function($scope, $http) {
+		$scope.cepEncontrado = true;
+		$scope.pesquisaFinalizada = false;
+		$scope.cepInvalido = false;
+		$scope.oldCEP = "";
+		var fillInputs = function(object) {
+			if (object != null && angular.isDefined(object)) {
+				$scope.inputRua = object.rua;
+				$scope.inputcep = object.cep;
+				$scope.inputBairro = object.bairro;
+				$scope.inputCidade = object.cidade;
+				$scope.inputUF = object.uf;
 				
-			});	
-		</script>
-	</head>
-	<body>
-		<div ng-app="myApp" ng-controller="EnderecoController">
-			<input type="text" ng-model="inputcep"></input><button ng-click="procurarCEP();">Buscar CEP</button>
-			<br />
-			{{teste}}
-			{{teste2}}
-		</div>
+			}
+
+		}
+		$scope.procurarCEP = function() {
+			$scope.oldCEP = $scope.inputcep;
+			var busca = {
+				"cep" : $scope.inputcep
+			};
+			
+			$http.post('/buscaRapidaCEP/', busca, {}).success(
+					function(data) {
+						$scope.pesquisaFinalizada = false;
+						$scope.endereco = data;
+						console.log(data);
+						if (data.response == "CEP_DESCONHECIDO") {
+							$http.post('/buscaCEP/', busca, {}).success(
+									function(subData) {
+										$scope.cepEncontrado = false;
+										$scope.cepInvalido = false;
+										
+										$scope.endereco = subData;
+										fillInputs($scope.endereco);
+										$scope.validate();
+									});
+						} else {
+							if(data.response == "CEP_INVALIDO"){
+								$scope.cepInvalido = true;
+								$scope.validate();
+							}else{
+								fillInputs($scope.endereco);
+								$scope.cepEncontrado = true;
+								$scope.cepInvalido = false;
+								$scope.validate();
+							}
+						}
+					});
+
+		}
+		$scope.validate = function(){
+			if(!($scope.cepEncontrado)){
+				$scope.mostrarMensagem = true;
+			}else{
+				$scope.mostrarMensagem = false;
+			}
+			if(($scope.cepInvalido && $scope.inputcep!="" && angular.isDefined($scope.inputcep) && $scope.inputcep.length>=5)){
+				$scope.mostrarMensagemInvalida = true;
+			}else{
+				$scope.mostrarMensagemInvalida = false;
+			}	
+		}
 		
-	</body>
+		$scope.salvar = function(){
+			
+			var obj = {
+				"rua":$scope.inputRua,
+				"cep":$scope.inputcep,
+				"bairro":$scope.inputBairro,
+				"cidade":$scope.inputCidade,
+				"uf":$scope.inputUF,
+				"numero":$scope.inputNumero
+			}
+			console.log("Saving",obj);
+			$http.post('/saveCEP/', obj, {}).success(
+				function(subData) {
+					console.log("Salvo");
+				}
+			);
+		}
+		
+	});
+</script>
+<style>
+.input-group span {
+	
+}
+</style>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="EnderecoController">
+		<div class="panel panel-default" style="width: 800px; margin: 0 auto;">
+			<div class="panel-heading">
+				Buscar CEP: <input type="text" ng-model="inputcep">
+				<button class="btn btn-default" ng-click="procurarCEP();"
+					type="button">Go!</button>
+			</div>
+			<div class="panel-body">
+				<div class="input-group">
+					<div class="row">
+						<div class="col-lg-8 col-sm-8">
+							Rua
+							<input type="text" class="form-control" ng-model="inputRua" placeholder=" ">
+						</div>
+						<div class="col-lg-4 col-sm-4">
+							Numero
+							<input type="text" class="form-control" ng-model="inputNumero" placeholder=" ">
+						</div>
+						<div class="col-lg-12 col-sm-12">
+							Bairro
+							<input type="text" class="form-control" ng-model="inputBairro">
+						</div>
+						<div class="col-lg-8 col-sm-8">
+							Cidade
+							<input type="text" class="form-control" ng-model="inputCidade" placeholder=" ">
+						</div>
+						<div class="col-lg-4 col-sm-4">
+							Estado
+							<input type="text" class="form-control" ng-model="inputUF">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12" style="padding:10px;margin-top:20px;">
+							<button class="btn btn-default" style="width:100%;" type="button" ng-click="salvar();">SALVAR</button>
+						</div>	
+					</div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
+						{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
+					</div>
+					<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
+						{{oldCEP}} é um cep inválido.
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
 </html>

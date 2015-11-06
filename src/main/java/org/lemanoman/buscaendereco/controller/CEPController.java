@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -21,8 +24,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.lemanoman.buscaendereco.model.BuscaModel;
+import org.lemanoman.buscaendereco.model.EnderecoModel;
 import org.lemanoman.buscaendereco.model.ResponseModel;
 import org.lemanoman.buscaendereco.model.StatusResponse;
+import org.lemanoman.buscaendereco.service.EnderecoService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +38,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CEPController {
+	private final EnderecoService enderecoService;
 
+    @Inject
+    public CEPController(final EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
+    }
+	
+	@RequestMapping(value="/saveCEP",method = RequestMethod.POST , produces = "application/json")
+    public void saveCEP(@RequestBody ResponseModel responseModel){
+		String codigo = String.valueOf((new Date().getTime()/1000));
+		EnderecoModel model = new EnderecoModel(codigo , responseModel.getCep(), responseModel.getRua() , responseModel.getUf(), responseModel.getBairro(), responseModel.getNumero());
+		enderecoService.save(model);
+    }
+	
+	@RequestMapping(value = "/listCEPS", method = RequestMethod.GET)
+    public List<EnderecoModel> listEmployees() {
+        List<EnderecoModel> employees = enderecoService.getList();
+        return employees;
+    }
+	
 	@RequestMapping(value = "/buscaCEP/{cep}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseModel buscaCEPGet(@PathVariable String cep) {
 		if (isCepValid(cep)) {
@@ -219,9 +243,9 @@ public class CEPController {
 	 * @return
 	 */
 	private boolean isCepValid(String cep) {
-		cep = cep.replaceAll("[^0-9]", "");
-		if(cep!=null && cep.matches("^[0-9]{8}$")){
-			return true;
+		if(cep!=null){
+			cep = cep.replaceAll("[^0-9]", "");
+			return cep.matches("^[0-9]{8}$");
 		}
 		return false;
 	}
