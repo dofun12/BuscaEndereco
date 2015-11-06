@@ -45,7 +45,7 @@ public class CEPController {
 	this.enderecoService = enderecoService;
     }
 
-    @RequestMapping(value="/saveCEP",method = RequestMethod.POST , produces = "application/json")
+    @RequestMapping(value="/saveCEP",method = RequestMethod.POST)
     public void saveCEP(@RequestBody ResponseModel responseModel){
 	EnderecoModel model = new EnderecoModel();
 	model.setBairro(responseModel.getBairro());
