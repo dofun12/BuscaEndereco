@@ -14,7 +14,7 @@ public class EnderecoModel {
     @Id
     @NotNull
     @Size(max = 64)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = true)
     private String id;
 
     @NotNull
@@ -22,34 +22,35 @@ public class EnderecoModel {
     @Column(name = "cep", nullable = false)
     private String cep;
 
-    
-    @NotNull
     @Size(max = 64)
-    @Column(name = "rua", nullable = false)
+    @Column(name = "rua", nullable = true)
     private String rua;
     
-    @NotNull
     @Size(max = 64)
-    @Column(name = "numero", nullable = false)
+    @Column(name = "numero", nullable = true)
     private String numero;
     
-    @NotNull
     @Size(max = 64)
-    @Column(name = "bairro", nullable = false)
+    @Column(name = "bairro", nullable = true)
     private String bairro;
     
-    @NotNull
     @Size(max = 64)
-    @Column(name = "uf", nullable = false)
+    @Column(name = "cidade", nullable = true)
+    private String cidade;
+    
+    
+    @Size(max = 64)
+    @Column(name = "uf", nullable = true)
     private String uf;
 
-    EnderecoModel() {
+    public EnderecoModel() {
     }
 
-    public EnderecoModel(final String id, final String cep,final String rua,final String uf,final String bairro,final String numero) {
+    public EnderecoModel(final String id, final String cep,final String rua,final String cidade,final String uf,final String bairro,final String numero) {
         this.id = id;
         this.cep = cep;
         this.bairro = bairro;
+        this.cidade = cidade;
         this.rua = rua;
         this.numero = numero;
         this.uf = uf;
@@ -105,6 +106,15 @@ public class EnderecoModel {
 		this.numero = numero;
 	}
 
+	 
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
 	@Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -112,6 +122,7 @@ public class EnderecoModel {
                 .add("rua", rua)
                 .add("numero", numero)
                 .add("cep", cep)
+                .add("cidade", cidade)
                 .add("uf", uf)
                 .add("bairro", bairro)
                 .toString();

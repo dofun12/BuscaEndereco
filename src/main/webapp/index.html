@@ -27,6 +27,8 @@
 				$scope.inputBairro = object.bairro;
 				$scope.inputCidade = object.cidade;
 				$scope.inputUF = object.uf;
+				$scope.inputNumero = object.numero;
+				$scope.codigo = object.id;
 				
 			}
 
@@ -51,7 +53,8 @@
 										$scope.endereco = subData;
 										fillInputs($scope.endereco);
 										$scope.validate();
-									});
+									}
+							);
 						} else {
 							if(data.response == "CEP_INVALIDO"){
 								$scope.cepInvalido = true;
@@ -80,8 +83,9 @@
 		}
 		
 		$scope.salvar = function(){
-			
+			var codigo = $scope.inputcep+":"+$scope.inputNumero;
 			var obj = {
+				"id": codigo,
 				"rua":$scope.inputRua,
 				"cep":$scope.inputcep,
 				"bairro":$scope.inputBairro,
@@ -93,10 +97,34 @@
 			$http.post('/saveCEP/', obj, {}).success(
 				function(subData) {
 					console.log("Salvo");
+					$scope.listar();
 				}
 			);
 		}
 		
+		$scope.deletar = function(obj){
+			console.log("Deletando",obj);
+			$http.post('/removerCEP/', obj, {}).success(
+				function(subData) {
+					console.log("Deletado");
+					$scope.listar();
+				}
+			);
+		}
+		$scope.listar = function(){
+			$http.get('/listCEPS/').success(
+				function(data) {
+					$scope.listaCEPS = data; 
+					console.log(data);
+				}
+			);
+		}
+		
+		$scope.selecionar = function(obj){
+			console.log("Selecionando",obj);
+			fillInputs(obj);
+		}
+		$scope.listar();
 	});
 </script>
 <style>
@@ -107,55 +135,73 @@
 </head>
 <body>
 	<div ng-app="myApp" ng-controller="EnderecoController">
-		<div class="panel panel-default" style="width: 800px; margin: 0 auto;">
-			<div class="panel-heading">
-				Buscar CEP: <input type="text" ng-model="inputcep">
-				<button class="btn btn-default" ng-click="procurarCEP();"
-					type="button">Go!</button>
-			</div>
-			<div class="panel-body">
-				<div class="input-group">
-					<div class="row">
-						<div class="col-lg-8 col-sm-8">
-							Rua
-							<input type="text" class="form-control" ng-model="inputRua" placeholder=" ">
-						</div>
-						<div class="col-lg-4 col-sm-4">
-							Numero
-							<input type="text" class="form-control" ng-model="inputNumero" placeholder=" ">
-						</div>
-						<div class="col-lg-12 col-sm-12">
-							Bairro
-							<input type="text" class="form-control" ng-model="inputBairro">
-						</div>
-						<div class="col-lg-8 col-sm-8">
-							Cidade
-							<input type="text" class="form-control" ng-model="inputCidade" placeholder=" ">
-						</div>
-						<div class="col-lg-4 col-sm-4">
-							Estado
-							<input type="text" class="form-control" ng-model="inputUF">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Buscar CEP: <input type="text" ng-model="inputcep">
+						<button class="btn btn-default" ng-click="procurarCEP();"
+							type="button">Go!</button>
+					</div>
+					<div class="panel-body">
+						<div class="input-group">
+							<div class="row">
+								<div class="col-lg-8 col-sm-8">
+									Rua
+									<input type="text" class="form-control" ng-model="inputRua" placeholder=" ">
+								</div>
+								<div class="col-lg-4 col-sm-4">
+									Numero
+									<input type="text" class="form-control" ng-model="inputNumero" placeholder=" ">
+								</div>
+								<div class="col-lg-12 col-sm-12">
+									Bairro
+									<input type="text" class="form-control" ng-model="inputBairro">
+								</div>
+								<div class="col-lg-8 col-sm-8">
+									Cidade
+									<input type="text" class="form-control" ng-model="inputCidade" placeholder=" ">
+								</div>
+								<div class="col-lg-4 col-sm-4">
+									Estado
+									<input type="text" class="form-control" ng-model="inputUF">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12" style="padding:10px;margin-top:20px;">
+									<button class="btn btn-default" style="width:100%;" type="button" ng-click="salvar();">Salvar/Modificar</button>
+								</div>	
+							</div>	
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12" style="padding:10px;margin-top:20px;">
-							<button class="btn btn-default" style="width:100%;" type="button" ng-click="salvar();">SALVAR</button>
-						</div>	
-					</div>	
+						<div class="col-md-12">
+							<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
+								{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
+							</div>
+							<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
+								{{oldCEP}} é um cep inválido.
+							</div>
+						</div>
+		
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
-						{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
-					</div>
-					<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
-						{{oldCEP}} é um cep inválido.
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">Lista</div>
+					<div class="panel-body">
+						<ul class="nav nav-pills nav-stacked">
+  							<li ng-repeat="obj in listaCEPS">
+  								<span ng-click="selecionar(obj);">{{obj.id}}</span>
+  								<span ng-click="deletar(obj);" class="glyphicon glyphicon-remove-sign"></span>
+  							</li>
+  						</ul>	
 					</div>
 				</div>
-
 			</div>
 		</div>
+		
 	</div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package org.lemanoman.buscaendereco.model;
 
 public class ResponseModel {
+	private String id;
 	private String rua;
 	private String bairro;
 	private String cidade;
@@ -61,6 +62,16 @@ public class ResponseModel {
 			break;
 		}
 		return "";
+	}
+
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public StatusResponse getResponse() {

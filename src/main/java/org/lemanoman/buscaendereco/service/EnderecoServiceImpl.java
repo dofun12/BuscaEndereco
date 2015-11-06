@@ -18,15 +18,15 @@ import org.springframework.validation.annotation.Validated;
 public class EnderecoServiceImpl implements EnderecoService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnderecoServiceImpl.class);
-    private final EnderecoRepository repository;
+    private EnderecoRepository repository;
 
     @Inject
-    public EnderecoServiceImpl(final EnderecoRepository repository) {
+    public EnderecoServiceImpl(EnderecoRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public EnderecoModel save(@NotNull @Valid final EnderecoModel endereco) {
+    public EnderecoModel save(@NotNull @Valid EnderecoModel endereco) {
         LOGGER.debug("Creating {}", endereco);
         return repository.save(endereco);
     }
@@ -36,5 +36,13 @@ public class EnderecoServiceImpl implements EnderecoService {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }
+
+    @Transactional
+	public void deletar(String id) {
+    	EnderecoModel model = repository.getOne(id);
+    	if(model!=null){
+    		repository.delete(model);
+    	}	
+	}
 
 }

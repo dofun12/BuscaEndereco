@@ -47,9 +47,20 @@ public class CEPController {
 	
 	@RequestMapping(value="/saveCEP",method = RequestMethod.POST , produces = "application/json")
     public void saveCEP(@RequestBody ResponseModel responseModel){
-		String codigo = String.valueOf((new Date().getTime()/1000));
-		EnderecoModel model = new EnderecoModel(codigo , responseModel.getCep(), responseModel.getRua() , responseModel.getUf(), responseModel.getBairro(), responseModel.getNumero());
+		EnderecoModel model = new EnderecoModel();
+		model.setBairro(responseModel.getBairro());
+		model.setCep(responseModel.getCep());
+		model.setCidade(responseModel.getCidade());
+		model.setNumero(responseModel.getNumero());
+		model.setUf(responseModel.getUf());
+		model.setRua(responseModel.getRua());
+		model.setId(responseModel.getId());
 		enderecoService.save(model);
+    }
+	
+	@RequestMapping(value="/removerCEP",method = RequestMethod.POST , produces = "application/json")
+    public void removerCEP(@RequestBody ResponseModel responseModel){
+		enderecoService.deletar(responseModel.getId());
     }
 	
 	@RequestMapping(value = "/listCEPS", method = RequestMethod.GET)
