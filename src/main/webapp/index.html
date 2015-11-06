@@ -13,145 +13,41 @@
 
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
-<script>
-	var app = angular.module('myApp', []);
-	app.controller('EnderecoController', function($scope, $http) {
-		$scope.cepEncontrado = true;
-		$scope.pesquisaFinalizada = false;
-		$scope.cepInvalido = false;
-		$scope.oldCEP = "";
-		var fillInputs = function(object) {
-			if (object != null && angular.isDefined(object)) {
-				$scope.inputRua = object.rua;
-				$scope.inputcep = object.cep;
-				$scope.inputBairro = object.bairro;
-				$scope.inputCidade = object.cidade;
-				$scope.inputUF = object.uf;
-				$scope.inputNumero = object.numero;
-				$scope.codigo = object.id;
-				$scope.inputComplemento = object.complemento;
-				
-			}
+<script src="js/buscaCepApp-controller.js"></script>
 
-		}
-		$scope.procurarCEP = function() {
-			$scope.oldCEP = $scope.inputcep;
-			var busca = {
-				"cep" : $scope.inputcep
-			};
-			
-			$http.post('/buscaRapidaCEP/', busca, {}).success(
-					function(data) {
-						$scope.pesquisaFinalizada = false;
-						$scope.endereco = data;
-						console.log(data);
-						if (data.response == "CEP_DESCONHECIDO") {
-							$http.post('/buscaCEP/', busca, {}).success(
-									function(subData) {
-										$scope.cepEncontrado = false;
-										$scope.cepInvalido = false;
-										
-										$scope.endereco = subData;
-										fillInputs($scope.endereco);
-										$scope.validate();
-									}
-							);
-						} else {
-							if(data.response == "CEP_INVALIDO"){
-								$scope.cepInvalido = true;
-								$scope.validate();
-							}else{
-								fillInputs($scope.endereco);
-								$scope.cepEncontrado = true;
-								$scope.cepInvalido = false;
-								$scope.validate();
-							}
-						}
-					});
-
-		}
-		$scope.validate = function(){
-			if(!($scope.cepEncontrado)){
-				$scope.mostrarMensagem = true;
-			}else{
-				$scope.mostrarMensagem = false;
-			}
-			if(($scope.cepInvalido && $scope.inputcep!="" && angular.isDefined($scope.inputcep) && $scope.inputcep.length>=2)){
-				$scope.mostrarMensagemInvalida = true;
-			}else{
-				$scope.mostrarMensagemInvalida = false;
-			}	
-		}
-		
-		$scope.salvar = function(){
-			var codigo = $scope.inputcep+":"+$scope.inputNumero;
-			var obj = {
-				"id": codigo,
-				"rua":$scope.inputRua,
-				"cep":$scope.inputcep,
-				"bairro":$scope.inputBairro,
-				"cidade":$scope.inputCidade,
-				"uf":$scope.inputUF,
-				"numero":$scope.inputNumero,
-				"complemento":$scope.inputComplemento
-			}
-			console.log("Saving",obj);
-			$http.post('/saveCEP/', obj, {}).success(
-				function(subData) {
-					console.log("Salvo");
-					$scope.listar();
-				}
-			);
-		}
-		
-		$scope.deletar = function(obj){
-			console.log("Deletando",obj);
-			$http.post('/removerCEP/', obj, {}).success(
-				function(subData) {
-					console.log("Deletado");
-					$scope.listar();
-				}
-			);
-		}
-		$scope.listar = function(){
-			$http.get('/listCEPS/').success(
-				function(data) {
-					$scope.listaCEPS = data; 
-					console.log(data);
-				}
-			);
-		}
-		
-		$scope.selecionar = function(obj){
-			$scope.mostrarMensagem = false;
-			$scope.mostrarMensagemInvalida = false;
-			
-			console.log("Selecionando",obj);
-			fillInputs(obj);
-		}
-		$scope.listar();
-	});
-</script>
 <style>
-.input-group span {
-	
+	.alerts-container{
+		margin-top:30px;
+	}
+	.endereco-item-title{
+		
+	}
+	.endereco-element{
+		padding:6px;
+		cursor:pointer;
+	}
+	.endereco-element:hover {
+		background-color: #CCC;	
+	}
+	.endereco-element-selected{
+		background-color: #FFC;
+	}
 }
+	
 </style>
 </head>
 <body>
-	<div ng-app="myApp" ng-controller="EnderecoController">
+	<div ng-app="buscaCepApp" ng-controller="EnderecoController">
 		<div class="row">
 			<div ng-show="listaCEPS.length>0" class="col-lg-2  col-sm-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Lista</div>
-					<div class="panel-body" style="height:275px;overflow: auto;">
+					<div class="panel-heading">Adicionados</div>
+					<div class="panel-body">
 						<div>
-							<ul class="nav nav-pills nav-stacked">
-	  							<li ng-repeat="obj in listaCEPS" >
-	  								<span ng-click="selecionar(obj);">{{obj.id}}</span>
-	  								<span ng-click="deletar(obj);" class="glyphicon glyphicon-remove-sign"></span>
-	  							</li>
-	  						</ul>	
+  							<div ng-class="{'endereco-element':true,'endereco-element-selected':isSelected(obj)}" ng-repeat="obj in listaCEPS" >
+  								<span class="endereco-item-title" ng-click="selecionar(obj);">{{obj.id}}</span>
+	  							<span ng-click="deletar(obj);" title="Deletar" class="glyphicon glyphicon-remove-sign"></span>
+	  						</div>	
   						</div>
 					</div>
 				</div>
@@ -167,38 +63,58 @@
 						<div class="input-group">
 							<div class="row">
 								<div class="col-lg-8 col-sm-12">
-									Rua
-									<input type="text" class="form-control" ng-model="inputRua" placeholder=" ">
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputRua}">
+										<label class="control-label" for="inptTxtRua">Rua</label>
+										<input type="text" class="form-control" id="inptTxtRua" ng-model="inputRua" placeholder=" ">
+									</div>	
 								</div>
 								<div class="col-lg-4 col-sm-12">
-									Numero
-									<input type="text" class="form-control" ng-model="inputNumero" placeholder=" ">
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputNumero}">
+										<label class="control-label" for="inptTxtNumero">Número</label>
+										<input type="text" class="form-control" id="inptTxtNumero" ng-model="inputNumero" placeholder=" ">
+									</div>	
 								</div>
 								<div class="col-lg-8 col-sm-12">
-									Bairro
-									<input type="text" class="form-control" ng-model="inputBairro">
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputBairro}">
+										<label class="control-label" for="inptTxtBairro">Bairro</label>
+										<input type="text" class="form-control" ng-model="inputBairro" id="inptTxtBairro" aria-invalid="false">
+									</div>	
 								</div>
 								<div class="col-lg-4 col-sm-12">
-									Complemento
-									<input type="text" class="form-control" ng-model="inputComplemento" placeholder=" ">
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputComplemento}">
+										<label class="control-label" for="inptTxtComplemento">Complemento</label>
+										<input type="text" class="form-control" ng-model="inputComplemento" id="inptTxtComplemento" aria-invalid="false">
+									</div>	
 								</div>
 								<div class="col-lg-8 col-sm-12">
-									Cidade
-									<input type="text" class="form-control" ng-model="inputCidade" placeholder=" ">
-								</div>
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputCidade}">
+										<label class="control-label" for="inptTxtCidade">Cidade</label>
+										<input type="text" class="form-control" id="inptTxtCidade" ng-model="inputCidade" placeholder=" ">
+									</div>
+								</div>	
 								<div class="col-lg-4 col-sm-12">
-									Estado
-									<input type="text" class="form-control" ng-model="inputUF">
+									<div ng-class="{'form-group' : true, 'has-error': invalidInputs.inputUF}">
+										<label class="control-label" for="inptTxtEstado">Estado</label>
+										<input type="text" class="form-control" id="inptTxtEstado" ng-model="inputUF">
+									</div>	
 								</div>
 							</div>
 							
 							<div class="row">
 								<div class="col-md-12">
-									<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
-										{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
-									</div>
-									<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
-										{{oldCEP}} é um cep inválido.
+									<div class="alerts-container">
+										<div ng-if="showMensagemSubstuido" class="alert alert-warning" role="alert">
+											{{messages.CEP_SUBSTITUIDO}}
+										</div>
+										<div ng-if="showMensagemInvalido" class="alert alert-danger" role="alert">
+											{{messages.CEP_INVALIDO}}
+										</div>
+										<div ng-if="showMensagemNaoEncontrado" class="alert alert-danger" role="alert">
+											{{messages.CEP_NAO_ENCONTRADO}}
+										</div>
+										<div ng-if="showMensagemCamposObrigatorios" class="alert alert-danger" role="alert">
+											{{messages.CAMPOS_OBRIGATORIOS}}
+										</div>
 									</div>
 								</div>
 							</div>

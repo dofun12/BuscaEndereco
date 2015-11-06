@@ -81,5 +81,23 @@ public class TesteCep {
 	assertEquals(model.getResponse(),StatusResponse.CEP_ENCONTRADO);
 
     }
+    
+    /**
+     * Teste para verificar o comportamento de um cep desconhecido. 
+     * Esse nunca será encontrado.
+     */
+    
+    @Test
+    public void testarCEPNuncaEncotrado() {
+	BuscaModel busca = new BuscaModel();
+	busca.setCep("01100-000");
+
+	ResponseModel model = restTemplate.postForObject(defaultContext + "buscaCEP", busca, ResponseModel.class);
+	assertEquals(model.getCep(), "01100-000".replaceAll("[^0-9]", ""));
+	assertEquals(model.getResponse(),StatusResponse.CEP_NAO_ENCONTRADO);
+
+    }
+    
+    
 
 }

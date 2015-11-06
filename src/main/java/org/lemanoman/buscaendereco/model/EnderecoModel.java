@@ -22,29 +22,32 @@ public class EnderecoModel {
     @Column(name = "cep", nullable = false)
     private String cep;
 
+    @NotNull
     @Size(max = 64)
-    @Column(name = "rua", nullable = true)
+    @Column(name = "rua", nullable = false)
     private String rua;
     
+    @NotNull
     @Size(max = 64)
-    @Column(name = "numero", nullable = true)
+    @Column(name = "numero", nullable = false)
     private String numero;
     
     @Size(max = 64)
     @Column(name = "bairro", nullable = true)
     private String bairro;
     
+    @NotNull
     @Size(max = 64)
-    @Column(name = "cidade", nullable = true)
+    @Column(name = "cidade", nullable = false)
     private String cidade;
     
     @Size(max = 64)
     @Column(name = "complemento", nullable = true)
     private String complemento;
     
-    
+    @NotNull
     @Size(max = 64)
-    @Column(name = "uf", nullable = true)
+    @Column(name = "uf", nullable = false)
     private String uf;
 
     public EnderecoModel() {

@@ -53,8 +53,8 @@ public class ResponseModel {
 
 	public String getResponseMessage() {
 		switch (this.response) {
-		case CEP_DESCONHECIDO:
-			return "CEP desconhecido";
+		case CEP_SUBSTITUIDO:
+			return "CEP substituido";
 		case CEP_ENCONTRADO:
 			return "CEP encontrado";
 		case CEP_INVALIDO:
