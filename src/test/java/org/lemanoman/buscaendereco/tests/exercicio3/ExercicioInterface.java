@@ -1,4 +1,4 @@
-package org.lemanoman.buscaendereco.tests.exercicio2;
+package org.lemanoman.buscaendereco.tests.exercicio3;
 
 public class ExercicioInterface {
     public static char firstChar(Stream input) {

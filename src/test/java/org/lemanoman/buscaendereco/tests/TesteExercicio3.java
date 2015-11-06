@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.lemanoman.buscaendereco.model.BuscaModel;
 import org.lemanoman.buscaendereco.model.ResponseModel;
 import org.lemanoman.buscaendereco.model.StatusResponse;
-import org.lemanoman.buscaendereco.tests.exercicio2.ExercicioInterface;
-import org.lemanoman.buscaendereco.tests.exercicio2.StreamImpl;
+import org.lemanoman.buscaendereco.tests.exercicio3.ExercicioInterface;
+import org.lemanoman.buscaendereco.tests.exercicio3.StreamImpl;
 import org.springframework.web.client.RestTemplate;
 
 import ch.qos.logback.core.status.Status;
 
-public class TesteExercicio2 {
+public class TesteExercicio3 {
      
 
     /**

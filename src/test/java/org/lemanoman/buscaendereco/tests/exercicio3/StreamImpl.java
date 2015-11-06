@@ -1,4 +1,4 @@
-package org.lemanoman.buscaendereco.tests.exercicio2;
+package org.lemanoman.buscaendereco.tests.exercicio3;
 
 public class StreamImpl implements Stream{
 	String value;

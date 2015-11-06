@@ -1,4 +1,4 @@
-package org.lemanoman.buscaendereco.tests.exercicio2;
+package org.lemanoman.buscaendereco.tests.exercicio3;
 
 public interface Stream{
     public char getNext();
