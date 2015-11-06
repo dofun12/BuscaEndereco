@@ -21,7 +21,7 @@ public class TesteExercicio3 {
      
 
     /**
-    * Teste do exercicio 02:
+    * Teste do exercicio 03:
     * 
     * Apartir de um texto, deve mostrar o primeiro caracter que não repete.
     * 
