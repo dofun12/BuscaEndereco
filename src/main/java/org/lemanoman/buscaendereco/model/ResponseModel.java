@@ -3,7 +3,7 @@ package org.lemanoman.buscaendereco.model;
 public class ResponseModel {
     private String rua;
     private String bairro;
-    private String estado;
+    private String cidade;
     private String uf;
     private String cep;
     private StatusResponse response;
@@ -24,12 +24,12 @@ public class ResponseModel {
 	this.bairro = bairro;
     }
 
-    public String getEstado() {
-	return estado;
+    public String getCidade() {
+	return cidade;
     }
 
-    public void setEstado(String estado) {
-	this.estado = estado;
+    public void setCidade(String cidade) {
+	this.cidade = cidade;
     }
 
     public String getUf() {
