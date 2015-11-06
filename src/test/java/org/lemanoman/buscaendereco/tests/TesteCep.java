@@ -73,12 +73,13 @@ public class TesteCep {
     
     @Test
     public void testarCEPDesconhecido() {
+	String cep = "07025125";
+	
 	BuscaModel busca = new BuscaModel();
-	busca.setCep("07025125");
+	busca.setCep(cep);
 
 	ResponseModel model = restTemplate.postForObject(defaultContext + "buscaCEP", busca, ResponseModel.class);
-	assertEquals(model.getCep(), "07025120".replaceAll("[^0-9]", ""));
-	assertEquals(model.getResponse(),StatusResponse.CEP_ENCONTRADO);
+	assertEquals(model.getResponse(),StatusResponse.CEP_SUBSTITUIDO);
 
     }
     
@@ -88,12 +89,13 @@ public class TesteCep {
      */
     
     @Test
-    public void testarCEPNuncaEncotrado() {
+    public void testarCEPNuncaEncontrado() {
+	String cep = "01100-000";
+	
 	BuscaModel busca = new BuscaModel();
-	busca.setCep("01100-000");
+	busca.setCep(cep);
 
 	ResponseModel model = restTemplate.postForObject(defaultContext + "buscaCEP", busca, ResponseModel.class);
-	assertEquals(model.getCep(), "01100-000".replaceAll("[^0-9]", ""));
 	assertEquals(model.getResponse(),StatusResponse.CEP_NAO_ENCONTRADO);
 
     }

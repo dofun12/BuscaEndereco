@@ -123,9 +123,13 @@ public class CEPController {
 	int lastIndex = cepSearch.length() - 1;
 	int zeros = 1;
 	ResponseModel model = find(cepSearch);
-	if(model==null){
+	if(model!=null){
+	    model.setResponse(StatusResponse.CEP_ENCONTRADO);
+	    return model;
+	}else{
 	    substituido = true;
 	}
+	
 	while (model == null && lastIndex > 0) {
 
 	    cepSearch = cepSearch.substring(0, lastIndex);
@@ -227,12 +231,10 @@ public class CEPController {
 		    responseModel.setBairro(bairro);
 		    responseModel.setCidade(cidade);
 		    responseModel.setUf(uf);
-		    if(!substituido){
-			responseModel.setResponse(StatusResponse.CEP_ENCONTRADO);
-			substituido = true;
-		    }else{
+		    if(substituido){
 			responseModel.setResponse(StatusResponse.CEP_SUBSTITUIDO);
-			substituido = false;
+		    }else{
+			responseModel.setResponse(StatusResponse.CEP_ENCONTRADO);
 		    }
 		    return responseModel;
 		}

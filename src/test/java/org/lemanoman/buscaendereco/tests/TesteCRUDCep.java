@@ -34,7 +34,7 @@ public class TesteCRUDCep {
     }
 
     /**
-    * Teste para verificar o comportamento de um cep inválido
+    * Testes que simula a adição de um Endereço
     */
     
     @Test
@@ -55,6 +55,10 @@ public class TesteCRUDCep {
 	assertNotNull(enderecosSalvos[0]);
     }
     
+    /**
+    * Testes que simula a insersão e consulta de um endereço
+    */
+    
     @Test
     public void testarConsulta() {
 	ResponseModel responseModel = new ResponseModel();
@@ -73,6 +77,10 @@ public class TesteCRUDCep {
 	assertNotNull(enderecosSalvos);
 	assertTrue(enderecosSalvos.length>0);
     }
+    
+    /**
+    * Testes que simula a insersão,consulta e por fim se ele foi deletado.
+    */
     
     @Test
     public void testarDelete() {
