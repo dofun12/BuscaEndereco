@@ -29,6 +29,7 @@
 				$scope.inputUF = object.uf;
 				$scope.inputNumero = object.numero;
 				$scope.codigo = object.id;
+				$scope.inputComplemento = object.complemento;
 				
 			}
 
@@ -75,7 +76,7 @@
 			}else{
 				$scope.mostrarMensagem = false;
 			}
-			if(($scope.cepInvalido && $scope.inputcep!="" && angular.isDefined($scope.inputcep) && $scope.inputcep.length>=5)){
+			if(($scope.cepInvalido && $scope.inputcep!="" && angular.isDefined($scope.inputcep) && $scope.inputcep.length>=2)){
 				$scope.mostrarMensagemInvalida = true;
 			}else{
 				$scope.mostrarMensagemInvalida = false;
@@ -91,7 +92,8 @@
 				"bairro":$scope.inputBairro,
 				"cidade":$scope.inputCidade,
 				"uf":$scope.inputUF,
-				"numero":$scope.inputNumero
+				"numero":$scope.inputNumero,
+				"complemento":$scope.inputComplemento
 			}
 			console.log("Saving",obj);
 			$http.post('/saveCEP/', obj, {}).success(
@@ -121,6 +123,9 @@
 		}
 		
 		$scope.selecionar = function(obj){
+			$scope.mostrarMensagem = false;
+			$scope.mostrarMensagemInvalida = false;
+			
 			console.log("Selecionando",obj);
 			fillInputs(obj);
 		}
@@ -136,70 +141,79 @@
 <body>
 	<div ng-app="myApp" ng-controller="EnderecoController">
 		<div class="row">
-			<div class="col-lg-8">
+			<div ng-show="listaCEPS.length>0" class="col-lg-2  col-sm-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Lista</div>
+					<div class="panel-body" style="height:275px;overflow: auto;">
+						<div>
+							<ul class="nav nav-pills nav-stacked">
+	  							<li ng-repeat="obj in listaCEPS" >
+	  								<span ng-click="selecionar(obj);">{{obj.id}}</span>
+	  								<span ng-click="deletar(obj);" class="glyphicon glyphicon-remove-sign"></span>
+	  							</li>
+	  						</ul>	
+  						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8  col-sm-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Buscar CEP: <input type="text" ng-model="inputcep">
-						<button class="btn btn-default" ng-click="procurarCEP();"
-							type="button">Go!</button>
+						<span>CEP</span>
+						<input type="text" ng-model="inputcep">
+						<span><button class="glyphicon glyphicon-search" type="button" ng-click="procurarCEP();"></button></span>
 					</div>
 					<div class="panel-body">
 						<div class="input-group">
 							<div class="row">
-								<div class="col-lg-8 col-sm-8">
+								<div class="col-lg-8 col-sm-12">
 									Rua
 									<input type="text" class="form-control" ng-model="inputRua" placeholder=" ">
 								</div>
-								<div class="col-lg-4 col-sm-4">
+								<div class="col-lg-4 col-sm-12">
 									Numero
 									<input type="text" class="form-control" ng-model="inputNumero" placeholder=" ">
 								</div>
-								<div class="col-lg-12 col-sm-12">
+								<div class="col-lg-8 col-sm-12">
 									Bairro
 									<input type="text" class="form-control" ng-model="inputBairro">
 								</div>
-								<div class="col-lg-8 col-sm-8">
+								<div class="col-lg-4 col-sm-12">
+									Complemento
+									<input type="text" class="form-control" ng-model="inputComplemento" placeholder=" ">
+								</div>
+								<div class="col-lg-8 col-sm-12">
 									Cidade
 									<input type="text" class="form-control" ng-model="inputCidade" placeholder=" ">
 								</div>
-								<div class="col-lg-4 col-sm-4">
+								<div class="col-lg-4 col-sm-12">
 									Estado
 									<input type="text" class="form-control" ng-model="inputUF">
 								</div>
 							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
+										{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
+									</div>
+									<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
+										{{oldCEP}} é um cep inválido.
+									</div>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-sm-12" style="padding:10px;margin-top:20px;">
-									<button class="btn btn-default" style="width:100%;" type="button" ng-click="salvar();">Salvar/Modificar</button>
+									<button class="btn btn-default" style="width:100%;" type="button" ng-click="salvar();">Adicionar/Modificar</button>
 								</div>	
 							</div>	
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div ng-if="mostrarMensagem" class="alert alert-warning" role="alert">
-								{{oldCEP}} não foi encontrado, porém encontramos {{endereco.cep}}
-							</div>
-							<div ng-if="mostrarMensagemInvalida" class="alert alert-danger" role="alert">
-								{{oldCEP}} é um cep inválido.
-							</div>
-						</div>
-		
-					</div>
+					
 				</div>
 			</div>
-			<div class="col-lg-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">Lista</div>
-					<div class="panel-body">
-						<ul class="nav nav-pills nav-stacked">
-  							<li ng-repeat="obj in listaCEPS">
-  								<span ng-click="selecionar(obj);">{{obj.id}}</span>
-  								<span ng-click="deletar(obj);" class="glyphicon glyphicon-remove-sign"></span>
-  							</li>
-  						</ul>	
-					</div>
-				</div>
-			</div>
+			<div class="col-lg-2  col-sm-12"></div>
+			
 		</div>
 		
 	</div>

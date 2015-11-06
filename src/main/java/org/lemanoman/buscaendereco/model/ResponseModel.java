@@ -8,6 +8,7 @@ public class ResponseModel {
 	private String uf;
 	private String cep;
 	private String numero;
+	private String complemento;
 	private StatusResponse response;
 
 	public String getRua() {
@@ -88,6 +89,14 @@ public class ResponseModel {
 
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 	
 

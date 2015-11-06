@@ -55,6 +55,7 @@ public class CEPController {
 		model.setUf(responseModel.getUf());
 		model.setRua(responseModel.getRua());
 		model.setId(responseModel.getId());
+		model.setComplemento(responseModel.getComplemento());
 		enderecoService.save(model);
     }
 	

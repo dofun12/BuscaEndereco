@@ -1,5 +1,10 @@
-/home/kevim/workspace_mars/BuscaEndereco/src/main/java/org/lemanoman/model/BuscaModel.java
-/home/kevim/workspace_mars/BuscaEndereco/src/main/java/org/lemanoman/run/Application.java
-/home/kevim/workspace_mars/BuscaEndereco/src/main/java/org/lemanoman/model/ResponseModel.java
-/home/kevim/workspace_mars/BuscaEndereco/src/main/java/org/lemanoman/model/StatusResponse.java
-/home/kevim/workspace_mars/BuscaEndereco/src/main/java/org/lemanoman/run/DefaultController.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\controller\CEPController.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\model\BuscaModel.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\service\EnderecoService.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\model\ResponseModel.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\service\EnderecoServiceImpl.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\controller\TesteController.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\model\StatusResponse.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\Application.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\service\EnderecoRepository.java
+C:\Users\KevimDesktop\git\BuscaEndereco\src\main\java\org\lemanoman\buscaendereco\model\EnderecoModel.java

@@ -38,6 +38,10 @@ public class EnderecoModel {
     @Column(name = "cidade", nullable = true)
     private String cidade;
     
+    @Size(max = 64)
+    @Column(name = "complemento", nullable = true)
+    private String complemento;
+    
     
     @Size(max = 64)
     @Column(name = "uf", nullable = true)
@@ -115,6 +119,14 @@ public class EnderecoModel {
 		this.cidade = cidade;
 	}
 
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
 	@Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -125,6 +137,7 @@ public class EnderecoModel {
                 .add("cidade", cidade)
                 .add("uf", uf)
                 .add("bairro", bairro)
+                .add("complemento", complemento)
                 .toString();
     }
 }
