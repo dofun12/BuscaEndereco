@@ -5,10 +5,16 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 
 <b>Ambiente</b>
 - IDE: Eclipse Mars
-- Restful framework: Spring RESTful Web Service
+- Restful framework: Spring Boot
 - Testes: JUnit 4
-- Construtor: Maven
-- Java sdk version: 1.8
+- Gerenciador de dependencias : Maven
+- (Oracle) Java SDK version: 1.8
+
+<b>Front-End (Tela) </b>
+- Angular JS 
+- Bootstrap
+- JQuery
+
 
 <b>Utilizados para "parsear" o site dos correios</b>
 - HTML Parser: Jsoup
