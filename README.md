@@ -21,14 +21,20 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 - HTTP Client: Apache HTTP Components
   
 
-### Iniciando o web service ###
+### Inicio Rápido ###
 
 - Baixe o arquivo [BuscaEndereco-1.0.0.jar](https://github.com/dofun12/BuscaEndereco/releases/download/v1.0/BuscaEndereco-1.0.0.jar)
 
-- Usando o JDK 1.8 da Oracle, execute o seguinte comando:
+- Usando o JDK 1.8 da Oracle(importante), execute o seguinte comando:
 ```
-	java -jar BuscaEndereco-1.0.0.jar
+	java -jar BuscaEndereco.jar
 ```	
+- Na página do seu browser acesse:
+[http://localhost:8080](http://localhost:8080) 
+
+E prontinho!!
+
+
 
 - Para testar o metodo GET:
 	- Entre no seu browser e digite a seguinte URL:
