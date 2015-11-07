@@ -30,11 +30,12 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 
 - Extraia o arquivo no diretório de sua escolha.
 
-- No diretório BuscaEndereço, execute o comando. Para que o programa seja "instalado":
+- No diretório BuscaEndereço o seguinte comando:
 
 ```
 	maven\bin\mvn package
 ```	
+- Esse comando irá gerar o executável.
 
 - Para iniciar o servidor, execute o seguinte comando:
 
