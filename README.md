@@ -1,7 +1,7 @@
 # BuscaEndereco #
 Um aplicativo que utiliza rest para buscar o endereço por um cep
 
-### Tecnologias: ###
+### Tecnologias:
 
 <b>Ambiente</b>
 - IDE: Eclipse Mars
@@ -9,6 +9,7 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 - Testes: JUnit 4
 - Gerenciador de dependencias : Maven
 - (Oracle) Java SDK version: 1.8
+- Compativel com dispositivos Móveis
 
 <b>Front-End (Tela) </b>
 - Angular JS 
@@ -21,43 +22,24 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 - HTTP Client: Apache HTTP Components
   
 
-### Inicio Rápido ###
+## Inicio Rápido
 
-- Baixe o arquivo [BuscaEndereco-1.0.0.jar](https://github.com/dofun12/BuscaEndereco/releases/download/v1.0/BuscaEndereco-1.0.0.jar)
+- Baixe o arquivo [BuscaEndereco.jar](https://github.com/dofun12/BuscaEndereco/blob/master/target/BuscaEndereco.jar?raw=true)
 
 - Usando o JDK 1.8 da Oracle(importante), execute o seguinte comando:
 ```
 	java -jar BuscaEndereco.jar
 ```	
-- Na página do seu browser acesse:
-[http://localhost:8080](http://localhost:8080) 
 
-E prontinho!!
+- No seu browser acesse o seguinte link [http://localhost:8080](http://localhost:8080) 
 
+  ![Alt text](https://github.com/dofun12/BuscaEndereco/raw/master/images/buscaendereco_homepage.PNG?raw=true "BuscaEndereco Home Page")
 
+---
 
-- Para testar o metodo GET:
-	- Entre no seu browser e digite a seguinte URL:
-	- [http://localhost:8080/buscaCEP/04571060](http://localhost:8080/buscaCEP/04571060)
-	- Onde o valor "04571060" é o cep selecionado
-	
-- Se a resposta for algo semelhante a :
-```
-{
-	"rua":"Rua Taperoá ",
-	"bairro":"Cidade Monções ",
-	"estado":"São Paulo","uf":"SP",
-	"cep":"04571-060",
-	"response":"CEP_ENCONTRADO",
-	"responseMessage":"CEP encontrado"
-}
-```	
-O web service esta funcionando corretamente :D
-	
+## Métodos REST
 
-### Métodos
-
-#### GET
+#### Busca de CEP (GET)
 ```
 http://localhost:8080/buscaCEP/{cep}
 ```
@@ -77,9 +59,7 @@ http://localhost:8080/buscaCEP/04571060
 }
 ```
 
----
-
-### POST
+### Busca de CEP (POST)
 ```
 http://localhost:8080/buscaCEP/
 ```
@@ -104,4 +84,61 @@ http://localhost:8080/buscaCEP/
 	"responseMessage":"CEP encontrado"
 }
 ```
+- Obs: O cep é um campo obrigatório
+- Sem reposta
+
+### Listar Enderecos Cadastrados
+```
+http://localhost:8080/listCEPS
+```
+#### Exemplo Resposta:
+```
+[{"id":"03267-120:118","cep":"03267-110","rua":"Rua Qualquer ","numero":"999","bairro":"Teste ","cidade":"São Paulo","complemento":null,"uf":"SP"}]
+```
+
+### Cadastrar Endereco (POST)
+```
+http://localhost:8080/saveCEP
+```
+#### Exemplo Envio:
+```
+{  
+   "id":"03267-120:118",
+   "cep":"03267-110",
+   "rua":"Rua Qualquer ",
+   "numero":"999",
+   "bairro":"Teste ",
+   "cidade":"São Paulo",
+   "complemento":null,
+   "uf":"SP"
+}
+```
+- Obs: O id,rua,numero e cidade são campos obrigatórios
+- Sem reposta
+
+### Deletar Endereco (POST)
+```
+http://localhost:8080/removerCEP
+```
+#### Exemplo Envio:
+```
+{  
+   "id":"03267-120:118"
+}
+```
+- Obs: O id é um campo obrigatório
+- Sem reposta
+
+### Classe Para Testes
+
+#### Foram criadas classes para testar o aplicativo(JUnit):
+- Elas se encontram no pacote: <b>org.lemanoman.buscaendereco.tests</b>
+- <b>TesteCep:</b> Classe criada para testar as repostas de busca de ceps.
+- <b>TesteCRUDCep:</b> Classe criada para testar os metodos de Cadastro,Lista e de Delete do aplicativo.
+- <b>TesteExercicio3:</b> Classe criada para implementar a classe "Stream" (Exercicio 03).
+- <b>TestarTudo:</b> Executa todos os Testes.
+
+
+
+
 
