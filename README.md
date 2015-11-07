@@ -30,7 +30,7 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 
 - Extraia o arquivo no diretório de sua escolha.
 
-- No diretório BuscaEndereço o seguinte comando:
+- No diretório BuscaEndereço execute o seguinte comando:
 
 ```
 	maven\bin\mvn package
