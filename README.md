@@ -40,7 +40,7 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 - Para iniciar o servidor, execute o seguinte comando:
 
 ```
-	java -jar BuscaEndereco.jar
+	java -jar target/BuscaEndereco.jar
 ```	
 
 - No seu browser acesse o seguinte link [http://localhost:8080](http://localhost:8080) 
