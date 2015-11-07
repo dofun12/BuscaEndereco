@@ -24,9 +24,20 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 
 ## Inicio Rápido
 
-- Baixe o arquivo [BuscaEndereco.jar](https://github.com/dofun12/BuscaEndereco/blob/master/target/BuscaEndereco.jar?raw=true)
+- Baixe e instale o JAVA SDK 1.8 da Oracle.
 
-- Usando o JDK 1.8 da Oracle(importante), execute o seguinte comando:
+- Baixe o zip [BuscaEndereco.zip](https://github.com/dofun12/BuscaEndereco/blob/master/BuscaEndereco.zip?raw=true)
+
+- Extraia o arquivo no diretório de sua escolha.
+
+- No diretório BuscaEndereço, execute o comando. Para que o programa seja "instalado":
+
+```
+	maven\bin\mvn package
+```	
+
+- Para iniciar o servidor, execute o seguinte comando:
+
 ```
 	java -jar BuscaEndereco.jar
 ```	
