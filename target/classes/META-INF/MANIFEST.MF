@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: BuscaEndereco
-Implementation-Version: 1.0.1
+Implementation-Version: 1.0.2
 Built-By: KevimDesktop
 Implementation-Vendor-Id: BuscaEndereco
 Build-Jdk: 1.8.0_65
