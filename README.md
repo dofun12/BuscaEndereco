@@ -24,8 +24,6 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 
 ## Inicio Rápido
 
-### Windows
-
 - Baixe e instale o JAVA SDK 1.8 da Oracle.
 
 - Baixe o zip [BuscaEndereco.zip](https://github.com/dofun12/BuscaEndereco/blob/master/BuscaEndereco.zip?raw=true)
@@ -36,55 +34,12 @@ Um aplicativo que utiliza rest para buscar o endereço por um cep
 - No diretório BuscaEndereço execute o seguinte comando:
 
 ```
-	maven\bin\mvn package
-```	
-- Ao executar esse comando, irá baixar todas as dependências do projeto, ou seja, pode demorar um pouco.
-
-```
-	java -jar target/BuscaEndereco.jar
+	java -jar BuscaEndereco.jar
 ```	
 
 - No seu browser acesse o seguinte link [http://localhost:8080](http://localhost:8080) 
 
   ![Alt text](https://github.com/dofun12/BuscaEndereco/raw/master/images/buscaendereco_homepage.PNG?raw=true "BuscaEndereco Home Page")
-
-
-
-
-
-### Linux
-
-- Baixe e instale o JAVA SDK 1.8 da Oracle.
-
-- Baixe o zip [BuscaEndereco.zip](https://github.com/dofun12/BuscaEndereco/blob/master/BuscaEndereco.zip?raw=true)
-
-- Extraia o arquivo no diretório de sua escolha.
-
-
-- No diretório BuscaEndereço execute o seguinte comando:
-
-- Adicione as permissões:
-```
-	chmod -R 755 ./maven/bin/*
-```	
-- Depois execute:
-```
-	./maven/bin/mvn package
-```	
-- Ao executar esse comando, irá baixar todas as dependências do projeto, ou seja, pode demorar um pouco.
-
-- Para iniciar o servidor, execute o seguinte comando:
-
-```
-	java -jar target/BuscaEndereco.jar
-```	
-
-- No seu browser acesse o seguinte link [http://localhost:8080](http://localhost:8080) 
-
-  ![Alt text](https://github.com/dofun12/BuscaEndereco/raw/master/images/buscaendereco_homepage.PNG?raw=true "BuscaEndereco Home Page")
-
-
-
 
 ---
 
